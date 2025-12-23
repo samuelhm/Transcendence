@@ -1,5 +1,11 @@
 const fastify = require('fastify')({ logger: true });
 
+fastify.register(require('@fastify/cors'), {
+  // OJO * Solo deberia ser en desarrollo, en producción especificar dominios concretos ###TODO###
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+});
+
 
 fastify.register(require('@fastify/http-proxy'), {
   upstream: 'http://localhost:3001',
