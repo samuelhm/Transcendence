@@ -47,7 +47,6 @@ fastify.get('/me', { onRequest: [fastify.authenticate] }, async (request, reply)
   }
 });
 
-// Arrancar en puerto 3002
 const start = async () => {
   try {
     await fastify.listen({ port: 3002 });
