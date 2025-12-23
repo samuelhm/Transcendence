@@ -2,19 +2,19 @@ const fastify = require('fastify')({ logger: true });
 
 fastify.register(require('@fastify/cors'), {
   // OJO * Solo deberia ser en desarrollo, en producción especificar dominios concretos ###TODO###
-  origin: '*', 
+  origin: '*',
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 });
 
 
 fastify.register(require('@fastify/http-proxy'), {
-  upstream: 'http://localhost:3001',
+  upstream: 'http://auth:3001',
   prefix: '/auth',
   http2: false
 });
 
 fastify.register(require('@fastify/http-proxy'), {
-  upstream: 'http://localhost:3002',
+  upstream: 'http://market:3002',
   prefix: '/market',
   http2: false
 });
@@ -27,7 +27,7 @@ fastify.get('/', async () => {
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3000 });
+    await fastify.listen({ port: 3000, host: '0.0.0.0' });
     console.log('Gateway (Router) corriendo en puerto 3000');
   } catch (err) {
     fastify.log.error(err);

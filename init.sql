@@ -15,10 +15,20 @@ CREATE TABLE IF NOT EXISTS public.users (
     is_active boolean DEFAULT true,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
-    
+
     -- Constraints explícitos
     CONSTRAINT users_email_key UNIQUE (email),
     CONSTRAINT users_nickname_key UNIQUE (nickname)
 );
 
 GRANT ALL PRIVILEGES ON TABLE public.users TO public;
+
+INSERT INTO public.users (nickname, email, password_hash, first_name, last_name)
+VALUES (
+    'usuario_root',
+    'admin@transcendence.com',
+    '1234',
+    'Super',
+    'Admin'
+)
+ON CONFLICT (email) DO NOTHING;

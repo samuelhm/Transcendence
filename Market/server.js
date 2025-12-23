@@ -1,11 +1,11 @@
 const fastify = require('fastify')({ logger: true });
 
 fastify.register(require('@fastify/jwt'), {
-  secret: 'supersecret_key_42' 
+  secret: 'supersecret_key_42'
 });
 
 fastify.register(require('@fastify/postgres'), {
-  connectionString: 'postgres://backuser:transcendence@localhost:5432/ventodb'
+  connectionString: 'postgres://backuser:transcendence@postgres-db:5432/ventodb'
 });
 
 // 3. Decorador: Una función "middleware" para proteger rutas
@@ -21,7 +21,7 @@ fastify.decorate('authenticate', async function (request, reply) {
 // 4. Ruta Protegida: Obtener mi perfil
 // Usamos { onRequest: [fastify.authenticate] } para blindar la ruta
 fastify.get('/me', { onRequest: [fastify.authenticate] }, async (request, reply) => {
-  
+
   // Si llegamos aquí, el token es válido.
   // request.user contiene el payload decodificado del token (id, email...)
   const userId = request.user.id;
@@ -30,8 +30,8 @@ fastify.get('/me', { onRequest: [fastify.authenticate] }, async (request, reply)
   try {
     // Seleccionamos todo MENOS el hash de la contraseña (seguridad básica)
     const { rows } = await client.query(
-      `SELECT id, email, nickname, first_name, last_name, city, avatar_path 
-       FROM users 
+      `SELECT id, email, nickname, first_name, last_name, city, avatar_path
+       FROM users
        WHERE id = $1`,
        [userId]
     );
@@ -49,7 +49,7 @@ fastify.get('/me', { onRequest: [fastify.authenticate] }, async (request, reply)
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3002 });
+    await fastify.listen({ port: 3002, host: '0.0.0.0' });
     console.log('Market Service corriendo en puerto 3002');
   } catch (err) {
     fastify.log.error(err);

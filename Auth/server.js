@@ -1,11 +1,11 @@
 const fastify = require('fastify')({ logger: true });
 
 fastify.register(require('@fastify/jwt'), {
-  secret: 'supersecret_key_42' 
+  secret: 'supersecret_key_42'
 });
 
 fastify.register(require('@fastify/postgres'), {
-  connectionString: 'postgres://backuser:transcendence@localhost:5432/ventodb'
+  connectionString: 'postgres://backuser:transcendence@postgres-db:5432/ventodb'
 });
 
 fastify.post('/login', async (request, reply) => {
@@ -31,13 +31,13 @@ fastify.post('/login', async (request, reply) => {
     return { token };
 
   } finally {
-    client.release(); 
+    client.release();
   }
 });
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3001 });
+    await fastify.listen({ port: 3001, host: '0.0.0.0' });
     console.log('Auth Service corriendo en puerto 3001');
   } catch (err) {
     fastify.log.error(err);
