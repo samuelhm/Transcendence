@@ -1,0 +1,24 @@
+# Forzar a Git a usar LF (formato Linux) para todos los archivos de texto
+# Esto evita que Windows corrompa scripts o archivos de configuración de Docker
+* text=auto eol=lf
+
+# Excepciones: Los archivos binarios no deben tocarse nunca
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.pyc binary
+*.pdf binary
