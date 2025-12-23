@@ -1,0 +1,55 @@
+# --- Dependencias (El "Binario" de Node) ---
+# Nunca se suben. Se regeneran con 'npm install'.
+# El asterisco asegura que lo ignore en cualquier subcarpeta (auth/node_modules, market/node_modules...)
+**/node_modules/
+**/package-lock.json # Opcional: Hay debate. En equipos serios SE DEBE subir para garantizar versiones exactas. Yo te recomiendo QUITAR esta línea y subirlo.
+**/yarn.lock
+**/pnpm-lock.yaml
+
+# --- Seguridad y Variables de Entorno (CRÍTICO) ---
+# Aquí viven tus secretos (JWT_SECRET, DB_PASSWORD).
+# Si subes esto a GitHub, bots escanearán tu repo en segundos.
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+**/.env
+
+# --- Docker y Datos Persistentes ---
+# Ignorar volúmenes locales mapeados (si usaras binds locales para la DB)
+postgres_data/
+mysql_data/
+mongo_data/
+
+# Archivos de override local de docker-compose (configuraciones solo de TU máquina)
+docker-compose.override.yml
+
+# --- Archivos Subidos por Usuarios (User Content) ---
+# No queremos subir los avatares de prueba al repo
+uploads/
+**/uploads/
+public/avatars/
+
+# --- Logs y Debugging ---
+# Ruido que no aporta nada al historial
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# --- IDEs y Editores (Configuración personal) ---
+# Tus preferencias de colores o plugins no le importan a tu compañero.
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# --- Build (Si usaras TypeScript/compilación en el futuro) ---
+dist/
+build/
+coverage/
